@@ -1,10 +1,12 @@
 export class Rating {
+    ratingId: number;
     userId: number;
     foodId: number;
     userRating: number;
 
 
-    constructor(userId: number, foodId: number, userRating: number) {
+    constructor(ratingId: number, userId: number, foodId: number, userRating: number) {
+        this,ratingId = ratingId;
         this.userId = userId;
         this.foodId = foodId;
         this.userRating = userRating;
@@ -17,7 +19,7 @@ export class Rating {
 */
     static from (obj: RatingRow): Rating {
         const rate = new Rating(
-            obj.user_id, obj.food_id, obj.user_rating
+            obj.rating_id, obj.user_id, obj.food_id, obj.user_rating
         );
         return rate;
     }
@@ -25,6 +27,7 @@ export class Rating {
 }
 
 export interface RatingRow {
+    rating_id: number;
     user_id: number;
     food_id: number;
     user_rating: number;

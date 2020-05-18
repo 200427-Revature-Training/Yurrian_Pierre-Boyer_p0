@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+require('dotenv').config();
 import { db } from './daos/db';
 import { usersRouter } from './routers/users-router';
 import { foodRouter } from './routers/food-router';
