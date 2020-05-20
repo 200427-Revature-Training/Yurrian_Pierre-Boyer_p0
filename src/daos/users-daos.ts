@@ -40,16 +40,12 @@ export function updateUser(user: User): Promise<User> {
         last_name = COALESCE($2, last_name), user_name = COALESCE($3, user_name), \
         email = COALESCE($4, email) WHERE user_id = $5 RETURNING *`;
 
-    return db.query<UserRow>(sql, user)
+    const params = [user.firstName, user.lastName,
+            user.userName, user.email, user.userId
+        ];
+
+    return db.query<UserRow>(sql, params)
         .then(result => result.rows.map(row => User.from(row))[0]
     );
     
-}
-
-export function deleteUser(user: User): Promise<User> {
-    const sql = `DELETE FROM users WHERE user_id = $1`;
-
-    return db.query<UserRow>(sql, user)
-        .then(result => result.rows.map(row => User.from(row))[0]
-    );
 }

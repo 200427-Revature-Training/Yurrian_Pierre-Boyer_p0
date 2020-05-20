@@ -8,9 +8,9 @@ export function getAllRatings(): Promise <Rating[]> {
 }
 
 /* Returns a rating by its rating_id  */
-export function getRatingById(user_id: number): Promise <Rating[]> {
-
-    return ratingsDao.getRatingsByUserId(user_id);
+export function getRatingById(rating_id: number): Promise<Rating> {
+    
+    return ratingsDao.getRatingById(rating_id);
 }
 
 /* Returns an array of ratings by its user_id  */
@@ -25,17 +25,12 @@ export function getRatingsByFoodId (food_id: number): Promise <Rating[]> {
     return ratingsDao.getRatingsByFoodId(food_id);
 }
 
-/* Returns the average ratings of a food by its food_id 
-export function getAverageRatingByFoodId (food_id: number): Rating {
-    Excluded until further notice
-} */ 
-
 /* Saves a rating */
 export function saveRating(rating: any): Promise<Rating> {
 
     const newRating = new Rating(
-        rating.ratingId, rating.userId, rating.foodId,
-        rating.userReating
+        undefined, rating.userId, rating.foodId, 
+        rating.userRating
     );
 
     if(rating.userId && rating.foodId && rating.userRating) {
@@ -51,25 +46,13 @@ export function saveRating(rating: any): Promise<Rating> {
 export function updateRating(input: any): Promise<Rating> {
 
     const rating = new Rating(
-        undefined, input.userId,
+        input.ratingId, input.userId,
         input.foodId, input.userRating
     );
 
-    if (!rating.ratingId) {
+    if (!rating.ratingId) { 
         throw new Error('400');
     }
     
     return ratingsDao.updateRating(rating);
-}
-
-/* Deletes a rating */
-export function deleteRating(rating: any): Promise<Rating> {
-    
-    return ratingsDao.deleteRating(rating);
-}
-
-/* Deletes all user's rating */
-export function deleteUserRatings(rating: any): Promise <Rating[]> {
-    
-    return ratingsDao.deleteUserRatings(rating);
 }

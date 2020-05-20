@@ -20,18 +20,19 @@ usersRouter.get('', (request, response, next) => {
 /* 
     GET http://localhost:3000/users/1
     Retrieves a single user from the database by id
-    If the person does not exist, sends 404 
+    If the user does not exist, sends 404 
 */
 usersRouter.get('/:userId', (request, response, next) => {
-    const user_id = parseInt(request.params.user_id);
-    usersService.getUserById(user_id).then(user => {
-        if (!user) {
+    const userId = parseInt(request.params.userId);
+    usersService.getUserById(userId).then(userId => {
+        if (!userId) {
             response.sendStatus(404);
         } else {
-            response.json(user);
+            response.json(userId);
         }
         next();
     }).catch(err => {
+        console.log(err);
         response.sendStatus(500);
         next();
     })
@@ -50,6 +51,7 @@ usersRouter.post('', (request, response, next) => {
             response.json(newUser);
             next();
         }).catch(err => {
+            console.log(err);
             response.sendStatus(500);
             next();
         });
@@ -68,29 +70,10 @@ usersRouter.patch('', (request, response, next) => {
                 response.sendStatus(404);
             }
         }).catch(err => {
+            console.log(err);
             response.sendStatus(500);
         }).finally(() => {
             next();
         })
 
-})
-
-/* 
-    DELETE http://localhost:3000/users/1
-    Deletes a user
-*/
-usersRouter.delete('/:id', (request, response, next) => {
-    const id = parseInt(request.params.id);
-    usersService.deleteUser(id).then(deletedUser => {
-        if (!deletedUser) {
-            response.sendStatus(404);
-            console.log('There is no user by this id!');
-        } else {
-            response.json(deletedUser);
-        }
-        next();
-    }).catch(err => {
-        response.sendStatus(500);
-        next();
-    })
 })

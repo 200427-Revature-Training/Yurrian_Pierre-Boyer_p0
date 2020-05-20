@@ -23,12 +23,12 @@ ratingsRouter.get('', (request, response, next) => {
     If the rating does not exist, sends 404 
 */
 ratingsRouter.get('/:ratingId', (request, response, next) => {
-    const id = parseInt(request.params.id);
-    ratingsService.getRatingById(id).then(rating => {
-        if (!rating) {
+    const ratingId = parseInt(request.params.ratingId);
+    ratingsService.getRatingById(ratingId).then(ratingId => {
+        if (!ratingId) {
             response.sendStatus(404);
         } else {
-            response.json(rating);
+            response.json(ratingId);
         }
         next();
     }).catch(err => {
@@ -45,12 +45,12 @@ ratingsRouter.get('/:ratingId', (request, response, next) => {
     If the rating does not exist, sends 404 
 */
 ratingsRouter.get('/userId/:userId', (request, response, next) => {
-    const id = parseInt(request.params.id);
-    ratingsService.getRatingsByUserId(id).then(rating => {
-        if (!rating) {
+    const userId = parseInt(request.params.userId);
+    ratingsService.getRatingsByUserId(userId).then(userId => {
+        if (!userId) {
             response.sendStatus(404);
         } else {
-            response.json(rating);
+            response.json(userId);
         }
         next();
     }).catch(err => {
@@ -66,12 +66,12 @@ ratingsRouter.get('/userId/:userId', (request, response, next) => {
     If food dosen't exist, sends 404
 */
 ratingsRouter.get('/foodId/:foodId', (request, response, next) => {
-    const id = parseInt(request.params.id);
-    ratingsService.getRatingsByFoodId(id).then(food => {
-        if (!food) {
+    const foodId = parseInt(request.params.foodId);
+    ratingsService.getRatingsByFoodId(foodId).then(foodId => {
+        if (!foodId) {
             response.sendStatus(404);
         } else {
-            response.json(food);
+            response.json(foodId);
         }
         next();
     }).catch(err => {
@@ -80,14 +80,14 @@ ratingsRouter.get('/foodId/:foodId', (request, response, next) => {
         next();
     })
 })
-
+ 
 
 /* 
-    PUT http://localhost:3000/ratings/
+    POST http://localhost:3000/ratings/
     Creates a new rating from a user and saves them to the database.
     Returns the inserted data as JSON with status 201.
 */
-ratingsRouter.put('', (request, response, next) => {
+ratingsRouter.post('', (request, response, next) => {
     const rating = request.body;
     ratingsService.saveRating(rating)
         .then(newRating => {
@@ -102,7 +102,7 @@ ratingsRouter.put('', (request, response, next) => {
 })
 
 /* 
-    PATCH http://localhost:3000/ratings/
+    PATCH http://localhost:3000/ratings/ 
     Updates a user's rating and saves it into the database
 */
 ratingsRouter.patch('', (request, response, next) => {
@@ -121,51 +121,3 @@ ratingsRouter.patch('', (request, response, next) => {
             next();
         })
 }) 
-
-/* 
-    DELETE http://localhost:3000/ratings
-    Deletes a certain user's rating from a database
-    (ISSUE)
-*/
-// ratingsRouter.delete('', (request, response, next) => {
-//     const id = parseInt(request.params.id);
-//         ratingsService.deleteRating(id).then(deletedUser => {
-//             if (!deletedUser) {
-//                 response.sendStatus(404);
-//                 console.log('There is no user by this id!');
-//             } else {
-//                 const id2 = parseInt(request.params.id2);
-//                     ratingsService.deleteRating(id2).then(deletedRating => {
-//                     if (!deletedRating) {
-//                 response.sendStatus(404);
-//                 console.log('There is no user by this id!');
-//             } else {
-//                 response.json(deletedRating);
-//             }
-//             }
-            
-//             next();
-//         }).catch(err => {
-//             response.sendStatus(500);
-//             next();
-//         })
-// })
-
-/* 
-    DELETE http://localhost:3000/ratings/userId/1
-    Deletes all of user's ratings from a database
-*/
-ratingsRouter.delete('/userId/:userId', (request, response, next) => {
-        const id = parseInt(request.params.id);
-        ratingsService.deleteUserRatings(id).then(deletedRatings => {
-            if (!deletedRatings) {
-                response.sendStatus(404);
-            } else {
-                response.json(deletedRatings);
-            }
-            next();
-        }).catch(err => {
-            response.sendStatus(500);
-            next();
-        })
-})

@@ -8,9 +8,9 @@ export function getAllComments(): Promise <Comment[]> {
 }
 
 /* Returns a comment by its id  */
-export function getCommentById(id: number): Promise<Comment> {
+export function getCommentById(comment_id: number): Promise<Comment> {
 
-    return commentsDao.getCommentById(id);
+    return commentsDao.getCommentById(comment_id);
 }
 
 /* Returns all comments by a user id  */
@@ -20,7 +20,7 @@ export function getCommentsByUserId(user_id: number): Promise<Comment[]> {
 }
 
 /* Returns all comments by a type id  */
-export function getCommentsByFoodId(food_id: number): Promise<Comment[]> {
+export function getCommentsByFoodId(food_id: number): Promise<Comment[]> { 
 
     return commentsDao.getCommentsByFoodId(food_id);
 }
@@ -55,18 +55,6 @@ export function updateComment(input: any): Promise<Comment> {
         throw new Error('400');
     }
     
-    return commentsDao.updateComment(comment);
-}
-
-/*  Deletes a comment */
-export function deleteComment(comment: any): Promise<Comment> {
-
-    return commentsDao.deleteComment(comment);
-}
-
-/*  Deletes all user's comment */
-export function deleteUserComments(comment: any): Promise<Comment[]> {
-
-    return commentsDao.deleteUserComments(comment);
+    return commentsDao.updateComment(comment); 
 }
 

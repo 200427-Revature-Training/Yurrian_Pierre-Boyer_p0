@@ -8,17 +8,20 @@ export function getAllUsers(): Promise <User[]> {
 }
 
 /* Returns a user by its id  */
-export function getUserById(user_id: number): Promise<User> {
+export function getUserById(userId: number): Promise<User> {
 
-    return usersDao.getUserById(user_id);
+    return usersDao.getUserById(userId);
 }
 
 /* Saves the user  */
 export function saveUser(user: any): Promise<User> {
 
     const newUser = new User(
-        undefined, user.firstName, user.lastName,
-        user.userName, user.email
+        undefined, 
+        user.firstName, 
+        user.lastName,
+        user.userName, 
+        user.email
     );
 
     if(user.firstName && user.lastName && user.userName && user.email) {
@@ -43,10 +46,4 @@ export function updateUser(input: any): Promise<User> {
     }
 
     return usersDao.updateUser(user);
-}
-
-/*  Deletes a user */
-export function deleteUser(user: any): Promise<User> {
-
-    return usersDao.deleteUser(user);
 }

@@ -23,12 +23,12 @@ commentsRouter.get('', (request, response, next) => {
     If the person does not exist, sends 404 
 */
 commentsRouter.get('/:commentId', (request, response, next) => {
-    const id = parseInt(request.params.id);
-        commentsService.getCommentById(id).then(comment => {
-            if (!comment) {
+    const commentId = parseInt(request.params.commentId);
+        commentsService.getCommentById(commentId).then(commentId => {
+            if (!commentId) {
                 response.sendStatus(404);
             } else {
-                response.json(comment);
+                response.json(commentId);
             }
             next();
         }).catch(err => {
@@ -43,12 +43,12 @@ commentsRouter.get('/:commentId', (request, response, next) => {
     Retrieves an array of a single user's comments from the database by user id
 */
 commentsRouter.get('/userId/:userId/', (request, response, next) => {
-    const id = parseInt(request.params.id);
-        commentsService.getCommentsByUserId(id).then(comment => {
-            if (!comment) {
+    const userId = parseInt(request.params.userId);
+        commentsService.getCommentsByUserId(userId).then(userId => {
+            if (!userId) {
                 response.sendStatus(404);
             } else {
-                response.json(comment);
+                response.json(userId);
             }
             next();
         }).catch(err => {
@@ -63,27 +63,27 @@ commentsRouter.get('/userId/:userId/', (request, response, next) => {
     Retrieves an array of comments about a food from the database by food id
 */
 commentsRouter.get('/foodId/:foodId/', (request, response, next) => {
-        const id = parseInt(request.params.id);
-            commentsService.getCommentsByFoodId(id).then(comment => {
-                if (!comment) {
+        const foodId = parseInt(request.params.foodId);
+            commentsService.getCommentsByFoodId(foodId).then(foodId => {
+                if (!foodId) {
                     response.sendStatus(404);
                 } else {
-                    response.json(comment);
+                    response.json(foodId);
                 }
                 next();
             }).catch(err => {
                 console.log(err);
-                response.sendStatus(500);
+                response.sendStatus(500); 
                 next();
             })
 })
 
 /* 
-    PUT http://localhost:3000/comments/
+    POST http://localhost:3000/comments/
     Creates a new comment from a user and saves them to the database.
     Returns the inserted data as JSON with status 201.
 */
-commentsRouter.put('', (request, response, next) => {
+commentsRouter.post('', (request, response, next) => {
     const comment = request.body;
     commentsService.saveComment(comment)
         .then(newComment => {
@@ -117,19 +117,3 @@ commentsRouter.patch('', (request, response, next) => {
             next();
         })
 }) 
-
-/* 
-    DELETE http://localhost:3000/comments/
-    Deletes a certain user's rating from a database
-*/
-commentsRouter.delete('', (request, response, next) => {
-
-})
-
-/* 
-    DELETE http://localhost:3000/comments/userId/1
-    Deletes all of user's ratings from a database
-*/
-// commentsRouter.delete('/userId/:userId', (request, response, next) => {
-
-// })

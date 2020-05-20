@@ -8,9 +8,9 @@ export function getAllFood(): Promise <Food[]> {
 }
 
 /* Returns a food by its id  */
-export function getFoodById(id: number): Promise<Food> {
+export function getFoodById(food_id: number): Promise<Food> {
 
-    return foodDao.getFoodById(id);
+    return foodDao.getFoodById(food_id); 
 }
 
 /* Returns a food by its type id  */
@@ -20,9 +20,9 @@ export function getFoodByTypeId(type_id: number): Promise<Food[]> {
 }
 
 /* Returns a food by its name */
-export function getFoodByName(name: string): Promise<Food> {
+export function getFoodByName(food_name: string): Promise<Food> {
 
-    return foodDao.getFoodByName(name);
+    return foodDao.getFoodByName(food_name);
 }
 
 /* Saves the food  */
@@ -33,7 +33,7 @@ export function saveFood(food: any): Promise<Food> {
         food.description
     );
 
-    if(food.typeId && food.foodName && food.description) {
+    if(food.typeId && food.foodName && food.description) { 
         
         return foodDao.saveFood(newFood);
     } else {
@@ -56,9 +56,3 @@ export function updateFood(input: any): Promise<Food> {
     
     return foodDao.updateFood(food);
 }
-
-/*  Deletes a food (May not want this)*/
- export function deleteFood(food: any): Promise<Food> {
-
-    return foodDao.deleteFood(food);
-} 

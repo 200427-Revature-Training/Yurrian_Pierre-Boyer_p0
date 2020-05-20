@@ -6,7 +6,7 @@ export class Rating {
 
 
     constructor(ratingId: number, userId: number, foodId: number, userRating: number) {
-        this,ratingId = ratingId;
+        this.ratingId = ratingId;
         this.userId = userId;
         this.foodId = foodId;
         this.userRating = userRating;
@@ -21,7 +21,7 @@ export class Rating {
         const rate = new Rating(
             obj.rating_id, obj.user_id, obj.food_id, obj.user_rating
         );
-        return rate;
+        return rate; 
     }
 
 }

@@ -1,7 +1,7 @@
 export class Comment {
     commentId: number;
     userId: number;
-    foodId: number;;
+    foodId: number;
     commentContent: string;
     createdAt: Date;
 
@@ -10,7 +10,7 @@ export class Comment {
         this.commentId = commentId;
         this.userId = userId;
         this.foodId = foodId;
-        this.commentContent = commentContent;
+        this.commentContent = commentContent; 
         this.createdAt = createdAt;
     }
 

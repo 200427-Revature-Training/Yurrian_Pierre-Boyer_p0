@@ -9,7 +9,7 @@ export function getAllComments(): Promise <Comment[]> {
     return db.query<CommentRow>(sql, []).then(result => {
         const rows: CommentRow[] = result.rows;
         //console.log(rows);
-
+ 
         const comments: Comment[] = rows.map(row => Comment.from(row));
         return comments;
     });    
@@ -64,33 +64,14 @@ export function saveComment(comment: any): Promise<Comment> {
 
 /* Updates the comment */
 export function updateComment(comment: any): Promise<Comment> {
-    const sql = `UPDATE "comments" comment_content = COALESCE($1, comment_content) \
+    const sql = `UPDATE "comments" SET comment_content = COALESCE($1, comment_content) \
          WHERE comment_id = $2 RETURNING *`;
 
-return db.query<CommentRow>(sql, comment)
+    const params = [comment.commentContent, comment.commentId];
+
+return db.query<CommentRow>(sql, params)
     .then(result => result.rows.map(row => Comment.from(row))[0]
 ); 
 }
 
-/*  Deletes a comment */
-export function deleteComment(comment: any): Promise<Comment> {
-    const sql = `DELETE FROM "comments" WHERE comment_id = $1`;
-
-    return db.query<CommentRow>(sql, comment)
-        .then(result => result.rows.map(row => Comment.from(row))[0]
-    );
-}
-
-/*  Deletes all user's comment */
-export function deleteUserComments(comment: any): Promise<Comment[]> {
-    const sql = `DELETE FROM "comments" WHERE user_id = $1`;
-
-    return db.query<CommentRow>(sql, [comment]).then(result => {
-        const rows: CommentRow[] = result.rows;
-        //console.log(rows);
-
-        const comments: Comment[] = rows.map(row => Comment.from(row));
-        return comments;
-    });    
-}
 
